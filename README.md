@@ -9,10 +9,27 @@ Races that are in the past are not returned. <br />
 CSV file with the specified headers as below. <br />
 
 #### Output:
-Race type, race info, race venue and the race start time, sorted ascending in the importance as below: <br />
+List of dictionaries containing race type, race info, race venue and the race start time, <br />
+sorted ascending in the importance as below: <br />
 1. Race start time
 2. Race number
 3. Race name
+
+
+#### Using the API:
+- System requirements: 
+    1.  Python 3.x
+    2.  Pip 19.x
+<br />
+- Dependencies are recorded in requirements.txt. <br />
+    To install dependencies, execute from command line:
+        pip install -r requirements.txt
+<br />
+- To access the returned data structure, execute from command line:
+        python3 next_to_jump.py <filename> 
+<br />
+- To access the output in text file, execute from command line:
+        python3 next_to_jump.py <filename> > <output>.txt
 
 ### Assumptions:
 API takes in CSV files with HEADERS of order: <br />

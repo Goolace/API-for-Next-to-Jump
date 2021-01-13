@@ -103,6 +103,3 @@ def extract_next_to_jump(df):
             e.g [ {race_type: 1, race_venue: "Melbourne", ... }, ...]
     '''
     return df.to_dict('records')
-
-df = clean_data("data1.csv")
-print(extract_next_to_jump(df))
