@@ -1,7 +1,7 @@
-race_type, race_number, race_name, race_venue, race_start_time
-1, 10, "Beach Run", "MCG Sports Centre", "2021-02-21 16:00:00"
-5, 12, "Beach Dive", "Melbourne Sports Centre", "2021-02-21 17:50:02"
-5, 12, "Beach Dive", "Melbourne Sports Centre", 
-5, 12, "Beach Dive", " ", "2021-02-21 17:50:02"
-3, 2, , "Victoria Street", "2021-03-21 00:50:02"
-4, , , "Victoria Street", "2021-03-21 00:50:02"
+race_type,race_number,race_name,race_venue,race_start_time
+1,10,"Beach Run",MCG Sports Centre,2021-01-13 16:00:00
+5,12,"Beach Dive",Melbourne Sports Centre,2021-01-13 17:50:02
+5,12,"Beach Dive",Melbourne Sports Centre, 
+5,12,"Beach Dive","",2021-02-21 17:50:02
+3,2,,"Victoria Street",2021-03-21 00:50:02
+4,,,"Victoria Street",2021-03-21 00:50:02
