@@ -27,7 +27,18 @@ sorted ascending in the importance as below: <br />
         pip install -r requirements.txt
         ```
 <br />
-- To access the returned data structure, execute from command line:<br />
+- Import module in a Python script using 
+```
+from api_utils import extract_next_to_jump
+```
+and run
+```
+output = extract_next_to_jump(filename)
+```
+where the data structure is returned in output.
+
+## DEMO:
+- To view the returned data structure in terminal, execute from command line:<br />
         ```
         python3 next_to_jump.py <filename> 
         ```
