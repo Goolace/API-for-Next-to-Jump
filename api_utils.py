@@ -14,12 +14,11 @@ def _select_valid_race(df):
     '''
     row_index, _ = np.where(pd.isnull(df))
 
-    # assert col_index is in range 1-2
+    # TODO: assert col_index is in range 1-2
     curr = -1
     index = []
     for item in row_index:
         if item == curr:
-            # print("duplicate")
             index.append(item)
         curr = item
     
@@ -52,10 +51,11 @@ def _concat_race_info(df):
     
     return race_info
 
-def clean_data(filename):
+def _clean_data(filename):
     '''
         Input   - filename
-        Output  - race_type, race_info (race_number and race_name concatenated), race_venue, race_time
+        Output  - dataframe containing 
+        race_type, race_info (race_number and race_name concatenated), race_venue, race_time
     '''
 
     # Check that CSV is in a required format and enforce the necessary types
@@ -91,15 +91,13 @@ def clean_data(filename):
 
     return selected_data[["race_type", "race_venue", "race_start_time", "race_info"]]
 
-def extract_next_to_jump(df):
+def extract_next_to_jump(filename):
     '''
-        Input - cleaned dataframe of next-to-jump races consisting of:
-                1. race_type
-                2. race_venue
-                3. race_start_time
-                4. race_info    
+        Input - filename of CSV data
         
         Output - list of dictionaries with the input and its value
             e.g [ {race_type: 1, race_venue: "Melbourne", ... }, ...]
     '''
+
+    df = _clean_data(filename)
     return df.to_dict('records')
