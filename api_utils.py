@@ -2,11 +2,63 @@ import pandas as pd
 import numpy as np
 import datetime as dt
 
-def clean_data(filename):
-    # TODO: check headers
+# TODO: pretty print
+def pretty_print_tabular():
+    raise NotImplementedError
+    return
 
-    # Check that CSV is in a required format
-    # and enforce the necessary types
+def _select_valid_race(df):
+    '''
+        Input   - pandas dataframe
+        Output  - The index of rows containing neither race number nor race name
+    '''
+    row_index, _ = np.where(pd.isnull(df))
+
+    # assert col_index is in range 1-2
+    curr = -1
+    index = []
+    for item in row_index:
+        if item == curr:
+            # print("duplicate")
+            index.append(item)
+        curr = item
+    
+    return index
+
+def _concat_race_info(df):
+    '''
+    Function concatenates race_venue and race_time into race_info for front-end display.
+        Input   -  pandas dataframe of next-to-jump races
+        Output  -  a list containing the race info concatenated as below from race_venue and race_time:
+
+            if race_number is not present, print:
+                <race_name>
+            if race_name is not present, print:
+                Race <race_number>
+            if both are present, print:
+                Race <race_number> - <race_name>
+    '''
+
+    race_info = []
+    for num, name in zip(df["race_number"], df["race_name"]):
+        if pd.isna(name):
+            race_info.append(f"Race {num}")
+            continue
+
+        if pd.isna(num):
+            race_info.append(f"{name}")
+        else:
+            race_info.append(f"Race {num} - {name}")
+    
+    return race_info
+
+def clean_data(filename):
+    '''
+        Input   - filename
+        Output  - race_type, race_info (race_number and race_name concatenated), race_venue, race_time
+    '''
+
+    # Check that CSV is in a required format and enforce the necessary types
     df = pd.read_csv(filename, sep=r'\s*,\s*', engine='python', na_values=[""],
         dtype={"race_type": "category", "race_number": "Int64", 
         "race_name": "string", "race_venue": "string"}, 
@@ -18,45 +70,36 @@ def clean_data(filename):
     # check mandatory fields
     df.dropna(subset=["race_type", "race_venue", "race_start_time"], inplace=True)
 
-    '''Attributes that are optional:
-        - Race number
-        - Race name
-        - Must have either one of them
-    '''
-
-    row_index, col_index = np.where(pd.isnull(df))
-
-    # assert col_index is in range 1-2
-    def _get_duplicated_index(row_index):
-        curr = -1
-        index = []
-        for item in row_index:
-            if item == curr:
-                # print("duplicate")
-                index.append(item)
-            curr = item
-        
-        return index
-
-    duplicated_index = _get_duplicated_index(row_index)
+    # remove invalid rows containing neither race number nor race name
+    duplicated_index = _select_valid_race(df)
     df.drop(df.index[duplicated_index], inplace=True)
 
-    # Assume: only require the today's race with the time
-    # Select Next-to-jump races for today only
-    # TODO: do not select past races
+    # select Next-to-jump races for today 
     date_today = dt.date.today()
 
-    selected_data = df[df.race_start_time.dt.date == date_today]
+    selected_data = df[(df.race_start_time.dt.date == date_today)
+                        & (df.race_start_time > dt.datetime.now())]
 
     # sort the races
-    selected_data = selected_data.sort_values(by="race_start_time")
+    selected_data = selected_data.sort_values(by=["race_start_time", "race_number", "race_name"])
 
     # require only the time
     selected_data["race_start_time"] = selected_data.race_start_time.dt.strftime("%H.%M")
 
-    # TODO: pretty print
-    print(selected_data)
+    # construct the race info based on race_number and race_name
+    selected_data["race_info"] = _concat_race_info(selected_data)
 
-    return selected_data
+    return selected_data[["race_type", "race_venue", "race_start_time", "race_info"]]
 
-print(clean_data("data1.csv"))
+def extract_next_to_jump(df):
+    '''
+        Input - cleaned dataframe of next-to-jump races consisting of:
+                1. race_type
+                2. race_venue
+                3. race_start_time
+                4. race_info    
+        
+        Output - list of dictionaries with the input and its value
+            e.g [ {race_type: 1, race_venue: "Melbourne", ... }, ...]
+    '''
+    return df.to_dict('records')
