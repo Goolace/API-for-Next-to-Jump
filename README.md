@@ -42,14 +42,16 @@ corresponding to rows 7 and 8 of the input.
 - System requirements: 
     1.  Python 3.6 and above
     2.  Pip 19.x and above
-<br />
+
 - Dependencies are recorded in requirements.txt. <br />
     To install dependencies, execute from command line: <br />
-        ```
-        pip install -r requirements.txt
-        ```
-<br />
+        
+```
+pip install -r requirements.txt
+```
+
 - Import module in a Python script using 
+
 ```
 from api_utils import extract_next_to_jump
 ```
@@ -60,15 +62,16 @@ output = extract_next_to_jump(filename)
 where the data structure is returned in output.
 
 ## DEMO:
-- To view the returned data structure in terminal, execute from command line:<br />
-        ```
-        python3 next_to_jump.py <filename> 
-        ```
-<br />
-- To access the output in text file, execute from command line:<br />
-        ```
-        python3 next_to_jump.py <filename> > <output>.txt
-        ```
+- To view the returned data structure in terminal, execute from command line:
+```
+python3 next_to_jump.py <filename> 
+```
+
+- To access the output in text file, execute from command line:
+
+```
+python3 next_to_jump.py <filename> > <output>.txt
+```
 
 ## Assumptions:
 API takes in CSV files with HEADERS of order: <br />
