@@ -64,6 +64,7 @@ def _clean_data(filename):
         "race_name": "string", "race_venue": "string"}, 
         parse_dates=[4], date_parser=pd.to_datetime)
 
+    print(df)
     # handle duplicated rows
     df = df.drop_duplicates()
 

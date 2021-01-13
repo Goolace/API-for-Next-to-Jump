@@ -15,6 +15,28 @@ sorted ascending in the importance as below: <br />
 2. Race number
 3. Race name
 
+A data1.csv input ran on timestamp 2021-01-13 22:29:00 <br />
+with the table:
+```
+  race_type  race_number          race_name               race_venue     race_start_time
+0         1           10          Beach Run        MCG Sports Centre 2021-01-13 16:00:00
+1         5           12         Beach Dive  Melbourne Sports Centre 2021-01-13 17:50:02
+2         5           12         Beach Dive  Melbourne Sports Centre                 NaT
+3         5           12         Beach Dive                     <NA> 2021-02-21 17:50:02
+4         3            2               <NA>          Victoria Street 2021-03-21 00:50:02
+5         4         <NA>               <NA>          Victoria Street 2021-03-21 00:50:02
+6         1           12         Beach Dive  Melbourne Sports Centre 2021-01-13 20:50:02
+7         3            3               <NA>          Victoria Street 2021-01-13 22:50:02
+8         2         <NA>  The Ultimate Race          Victoria Street 2021-01-13 22:50:02
+```
+will yield output as below:
+```
+[
+    {'race_type': '3', 'race_venue': 'Victoria Street', 'race_start_time': '22.50', 'race_info': 'Race 3'},
+    {'race_type': '2', 'race_venue': 'Victoria Street', 'race_start_time': '22.50', 'race_info': 'The Ultimate Race'}
+]
+```
+corresponding to rows 7 and 8 of the input. 
 
 ## Using the API:
 - System requirements: 
